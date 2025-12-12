@@ -35,3 +35,4 @@ private:
 };
 
 #endif // COMPONENT_H
+

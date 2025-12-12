@@ -9,6 +9,7 @@ class ReportGenerator
 {
 public:
     static bool generateCSV(const QString &path, const QVector<Component> &list);
+    static bool generateUMLDiagram(const QString &path);
 };
 
 #endif // REPORTGENERATOR_H

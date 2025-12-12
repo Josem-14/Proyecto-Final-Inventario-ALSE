@@ -29,6 +29,7 @@ private slots:
     void onEliminar();
     void onBuscar();
     void onExportar();
+    void onExportarUML();
 
 private:
     Ui::MainWindow *ui;

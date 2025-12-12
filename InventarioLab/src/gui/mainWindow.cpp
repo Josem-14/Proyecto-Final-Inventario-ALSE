@@ -9,7 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     //
-    // 🔥 CONEXIONES MANUALES (garantizado que funciona SIEMPRE)
     //
     connect(ui->btnAdd,     &QPushButton::clicked, this, &MainWindow::onAgregar);
     connect(ui->btnUpdate,  &QPushButton::clicked, this, &MainWindow::onActualizar);
@@ -164,10 +163,12 @@ void MainWindow::onBuscar()
 ////////////////////////////////////////////////////
 void MainWindow::onExportar()
 {
-    QString path = QFileDialog::getSaveFileName(this,
-                                                "Guardar reporte CSV",
-                                                "",
-                                                "Archivo CSV (*.csv)");
+    // Carpeta fija donde guardar reportes
+    QString reportDir = QDir::currentPath() + "/reportes";
+
+    QDir().mkpath(reportDir);
+
+    QString path = QFileDialog::getSaveFileName(this,"Guardar reporte CSV",reportDir, "Archivo CSV (*.csv)");
 
     if (path.isEmpty())
         return;
@@ -175,7 +176,7 @@ void MainWindow::onExportar()
     QVector<Component> lista = manager.getComponents();
 
     if (ReportGenerator::generateCSV(path, lista)) {
-        QMessageBox::information(this, "Éxito", "Archivo exportado correctamente.");
+        QMessageBox::information(this, "Éxito","Reporte guardado en:\n" + path);
     } else {
         QMessageBox::critical(this, "Error", "No se pudo exportar el archivo.");
     }
